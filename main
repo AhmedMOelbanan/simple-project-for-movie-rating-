@@ -1,0 +1,179 @@
+# -----------------------------------------
+# Movie Rating System
+# -----------------------------------------
+
+# -------------------------
+# Movie Class
+# -------------------------
+class movie:
+    def __init__(self, movie_name, movie_rating, movie_year, movie_category, movie_appsfor):
+        self.movie_name = movie_name
+        self.movie_rating = movie_rating
+        self.movie_year = movie_year
+        self.movie_category = movie_category
+        self.movie_appsfor = movie_appsfor
+
+    def get_level(self):
+        if self.movie_rating >= 8:
+            return "Excellent"
+        elif self.movie_rating >= 6:
+            return "Good"
+        else:
+            return "Average"
+
+    def show_info(self):
+        print("\n--- Movie Info ---")
+        print("Name:", self.movie_name)
+        print("Rating:", self.movie_rating)
+        print("Year:", self.movie_year)
+        print("Category:", self.movie_category)
+        print("Available on:", self.movie_appsfor)
+        print("Level:", self.get_level())
+        print("------------------")
+
+
+# --------------------------------------
+# Global list
+# --------------------------------------
+movies = []
+
+
+# --------------------------------------
+# Add Movie
+# --------------------------------------
+def add_movie():
+    print("\nAdd New Movie")
+
+    name = input("Enter movie name: ")
+    rating = float(input("Enter movie rating (0-10): "))
+    year = int(input("Enter movie year: "))
+    category = input("Enter movie category: ")
+    app = input("Where can we watch it? ")
+
+    m = movie(name, rating, year, category, app)
+    movies.append(m)
+
+    print("\nMovie added successfully!")
+
+
+# --------------------------------------
+# Show All Movies
+# --------------------------------------
+def show_all_movies():
+
+    if len(movies) == 0:
+        print("\nNo movies found.")
+        return
+
+    for m in movies:
+        m.show_info()
+
+
+# --------------------------------------
+# Search Movie by Name
+# --------------------------------------
+def find_movie():
+
+    name = input("\nEnter movie name to search: ")
+
+    for m in movies:
+        if m.movie_name.lower() == name.lower():
+            m.show_info()
+            return
+
+    print("\nMovie not found.")
+
+
+# --------------------------------------
+# Delete Movie
+# --------------------------------------
+def delete_movie():
+
+    name = input("\nEnter movie name to delete: ")
+
+    for m in movies:
+        if m.movie_name.lower() == name.lower():
+            movies.remove(m)
+            print("\nMovie deleted successfully!")
+            return
+
+    print("\nMovie not found.")
+
+
+# --------------------------------------
+# Search Movies by Category
+# --------------------------------------
+def find_movies_by_category():
+
+    category = input("\nEnter category to search: ")
+
+    found = False
+
+    for m in movies:
+        if m.movie_category.lower() == category.lower():
+            m.show_info()
+            found = True
+
+    if not found:
+        print("\nNo movies found in this category.")
+
+
+# --------------------------------------
+# Top Rated Movie
+# --------------------------------------
+def show_top_movie():
+
+    if not movies:
+        print("\nNo movies available.")
+        return
+
+    top = max(movies, key=lambda m: m.movie_rating)
+
+    print("\nTop Rated Movie:")
+    top.show_info()
+
+
+# --------------------------------------
+# Main Menu
+# --------------------------------------
+def main():
+
+    while True:
+
+        print("\n===== Movie Rating System =====")
+        print("1 Add Movie")
+        print("2 Show All Movies")
+        print("3 Search Movie")
+        print("4 Delete Movie")
+        print("5 Show Top Movie")
+        print("6 Search Movies by Category")
+        print("7 Exit")
+
+        choice = input("\nEnter your choice: ")
+
+        if choice == "1":
+            add_movie()
+
+        elif choice == "2":
+            show_all_movies()
+
+        elif choice == "3":
+            find_movie()
+
+        elif choice == "4":
+            delete_movie()
+
+        elif choice == "5":
+            show_top_movie()
+
+        elif choice == "6":
+            find_movies_by_category()
+
+        elif choice == "7":
+            print("\nGoodbye!")
+            break
+
+        else:
+            print("\nInvalid choice")
+
+main()
